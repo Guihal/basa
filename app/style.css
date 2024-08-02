@@ -1,1 +1,1 @@
-.container{height:100vh;background-color:#e7e3eb}.container .header{padding:15px 20px;background-color:#6200ee}.container .header h1{color:#fff}
+.container .fd{display:block;width:-webkit-fit-content;width:-moz-fit-content;width:fit-content}
