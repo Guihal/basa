@@ -9,7 +9,7 @@
 		"watch": "webpack watch"
 	},
 	"repository": {},
-	"keywords": [],a
+	"keywords": [],
 	"devDependencies": {
 		"@types/core-js": "^2.5.5",
 		"@types/node": "^17.0.18",
