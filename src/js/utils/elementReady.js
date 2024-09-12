@@ -1,4 +1,4 @@
-async function elementReady(selector) {
+export async function elementReady(selector) {
 	return new Promise((resolve) => {
 		const observer = new MutationObserver((mutations, obs) => {
 			const block = document.querySelector(selector);
