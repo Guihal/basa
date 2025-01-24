@@ -4,7 +4,6 @@ export class Accordion {
     content
     timeout
     pass = true
-    animation
     duration = 300
 
     constructor(btn, content) {
@@ -12,7 +11,6 @@ export class Accordion {
         this.btn = btn
         this.content = content
         this.accordionHeight = this.content.offsetHeight
-        this.animation = this.quad
 
         this.addEvent()
     }
@@ -49,10 +47,6 @@ export class Accordion {
             this.content.classList.add('show')
             this.pass = true
         })
-    }
-
-    quad(timeFraction) {
-        return Math.pow(timeFraction, 2)
     }
 
     hideAccordion() {
