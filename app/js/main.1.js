@@ -1,3 +1,4 @@
+/******/ (function() { // webpackBootstrap
 async function helloWorld() {
     const body = await elementReady('body')
 
@@ -5,3 +6,6 @@ async function helloWorld() {
 }
 
 helloWorld()
+
+/******/ })()
+;
