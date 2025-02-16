@@ -2,6 +2,7 @@ var path = require('path')
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlBundlerPlugin = require('html-bundler-webpack-plugin')
 const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin') // Добавлено
 
 module.exports = {
     entry: './src/js/main.js',
@@ -108,6 +109,20 @@ module.exports = {
         minimizer: [
             // this plugin is called at the PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE stage
             new HtmlMinimizerPlugin({}),
+            new TerserPlugin({
+                // Минификация JavaScript
+                parallel: true,
+                terserOptions: {
+                    format: {
+                        comments: false,
+                    },
+                },
+                extractComments: false,
+            }),
         ],
+    },
+
+    performance: {
+        hints: false,
     },
 }
