@@ -1,3 +1,221 @@
-.body {
-    background: #000;
+.progress {
+    --progress: 100%;
+    position: relative;
+    margin-bottom: 10px;
+    height: 47px;
+    border-radius: 32px;
+    background: #494949;
+    overflow: hidden;
+    transition: opacity 0.3s ease-in;
+
+    @media (max-width: 640px) {
+        height: 41px;
+    }
+
+    &_disclaimer {
+        font-weight: 400;
+        font-size: 14px;
+        text-align: center;
+        color: #000;
+        opacity: 0.5;
+
+        @media (max-width: 640px) {
+            font-size: 12px;
+        }
+    }
+
+    &_text {
+        transition: opacity 0.3s ease-in;
+        z-index: 2;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        translate: -50% -50%;
+        width: 100%;
+        text-align: center;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 100%;
+        width: fit-content;
+        text-align: center;
+        height: fit-content;
+        padding-bottom: 3px;
+        color: #fff;
+
+        @media (max-width: 640px) {
+            font-size: 14px;
+        }
+    }
+
+    &::after {
+        z-index: 1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        max-width: var(--progress);
+        transition: max-width 0.3s ease-in-out;
+        height: 100%;
+        border-radius: 32px;
+        background: linear-gradient(132deg, #00c7b1 0%, #13df83 100%);
+    }
+
+    &.loading {
+        &::after {
+            max-width: 0;
+        }
+
+        .progress_text {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+
+    &::before {
+        z-index: 3;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        translate: -50% -50%;
+        content: '';
+        opacity: 0;
+        transition: opacity 0.3s;
+        width: 20px;
+        height: 20px;
+        background-image: url('https://static.tildacdn.com/tild6362-6230-4630-b438-653063373630/Frame_2.svg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        animation: rotate 1s infinite;
+        border-radius: 50%;
+
+        @keyframes rotate {
+            0% {
+                rotate: 0deg;
+            }
+
+            50% {
+                rotate: 360deg;
+            }
+
+            100% {
+                rotate: 720deg;
+            }
+        }
+    }
+
+    &__container {
+        font-family: 'YsabeauInfant', Arial, sans-serif;
+    }
+}
+
+.with-loading {
+    &::before {
+        z-index: 3;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        translate: -50% -50%;
+        content: '';
+        opacity: 0;
+        transition: opacity 0.3s;
+        width: 20px;
+        height: 20px;
+        background-image: url('https://static.tildacdn.com/tild6362-6230-4630-b438-653063373630/Frame_2.svg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        animation: rotate 1s infinite;
+        border-radius: 50%;
+
+        @keyframes rotate {
+            0% {
+                rotate: 0deg;
+            }
+
+            50% {
+                rotate: 360deg;
+            }
+
+            100% {
+                rotate: 720deg;
+            }
+        }
+    }
+
+    &.loading {
+        &::before {
+            opacity: 1;
+        }
+    }
+}
+
+.js-store-prod-sku {
+    display: none;
+}
+
+.table {
+    font-family: 'YsabeauInfant', Arial, sans-serif;
+    background: transparent;
+    transition: background 0.3s ease-in-out;
+    position: relative;
+    padding: 0 20px;
+    box-sizing: border-box;
+    margin-bottom: 100px;
+
+    @media (max-width: 768px) {
+        margin-bottom: 40px;
+    }
+
+    &_text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: 400;
+        color: #4d4c4c;
+    }
+
+    &__container {
+        zoom: var(--zoom);
+    }
+
+    &__body {
+        .table__row:nth-child(2n) {
+            background: #eeeeee;
+        }
+    }
+
+    &.loading {
+        .table__row {
+            opacity: 0;
+        }
+    }
+
+    &__header {
+        border-bottom: 1px solid #000;
+
+        &_text {
+            color: #039e72;
+            font-weight: 600;
+        }
+    }
+
+    &__row {
+        transition: opacity 0.3s ease-in-out;
+        display: flex;
+        width: 100%;
+    }
+
+    &__col {
+        padding: 20px;
+        box-sizing: border-box;
+        width: 100%;
+
+        &-small {
+            padding: 20px;
+            box-sizing: border-box;
+            min-width: 140px;
+            width: 20%;
+        }
+    }
 }

@@ -1,11 +1,1 @@
-/******/ (function() { // webpackBootstrap
-async function helloWorld() {
-    const body = await elementReady('body')
-
-    console.log('hello world!')
-}
-
-helloWorld()
-
-/******/ })()
-;
+!function(){"use strict";async function t(t=1,e=100){try{const o=await fetch(`https://store.tildaapi.com/api/getproductslist/?storepartuid=357749660412&recid=1442128661&getparts=true&c=${Date.now()}&getoptions=true&slice=${t}&size=${e}`);return(await o.json()).products}catch(t){return console.log(t),[]}}async function e(){const e=await async function(){let e=!1,o=0;const n=[];for(;!1===e;){o++;const s=await t(o,100);s.length<100&&(e=!0),n.push(...s)}return n}(),o=[];let n=0,s=0;return e.forEach((t=>{t.editions.forEach((e=>{let c=!1;0===Number(e.quantity)&&(c||(o.push(t),c=!0),n++),s++}))})),{payed:n,all:s,payedProducts:o}}function o(t,e){document.querySelectorAll(".progress").forEach((o=>{const n=o.querySelector(".progress_text");n&&0!==e&&(n.textContent=`${t}/${e}`,o.style.setProperty("--progress",t/e*100+"%"),o.classList.remove("loading"))}))}!async function(){const{payed:t,all:n,payedProducts:s}=await e();!async function(t,e){document.addEventListener("DOMContentLoaded",(()=>{o(t,e),console.log(1)})),o(t,e)}(t,n),function(t){const e=document.querySelector(".table__body");if(!e)return;let o="";t.forEach((t=>{t.title.includes("{")&&(console.log(t),o+=`\n        <div class="table__row">\n            <div class="table__col-small"><div class="table_text">${function(t){return t.title.split("{")[1].split("}")[0].replace(",","").trim()}(t)}</div></div>\n            <div class="table__col"><div class="table_text">${t.sku}</div></div>\n        </div>\n        `)})),e.innerHTML=o}(s)}(),async function(){let t=!1;const e=async(o=!0)=>{if(t)return;const n=document.querySelector('[style*="zoom"]:not(svg, html)');if(!n)return void setTimeout(e,30);t=!0;const s=()=>{let t=getComputedStyle(n).zoom;console.log(t,n,getComputedStyle(n)),"0"!=t&&"1"!==t||(t=getComputedStyle(n).getPropertyValue("--zoom"),"0"===t&&(t="1")),document.documentElement.style.setProperty("--zoom",t)};s();new MutationObserver(s).observe(n,{attributes:!0})};e(!1)}()}();

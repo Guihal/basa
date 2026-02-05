@@ -1,3 +1,5 @@
+import { getNotSelector } from './getNotSelector'
+
 class DocumentMutationObserver {
     needToCall = []
     desired = []
@@ -9,8 +11,7 @@ class DocumentMutationObserver {
         this.observer.observe(document.documentElement, this.opt)
 
         document.addEventListener('DOMContentLoaded', () => {
-            this.runDesired(document.documentElement)
-            this.runNeedToCall(document.documentElement)
+            this.run(document.documentElement)
         })
     }
 
@@ -19,43 +20,31 @@ class DocumentMutationObserver {
             mutation.addedNodes.forEach((node) => {
                 if (node.nodeType !== Node.ELEMENT_NODE) return
 
-                this.runNeedToCall(node)
-                this.runDesired(node)
+                this.run(node)
             })
         })
     }
+
+    run = (node) =>
+        setTimeout(() => {
+            this.runDesired(node)
+            this.runNeedToCall(node)
+        })
 
     runNeedToCall(node) {
         this.needToCall.forEach((obj) => {
             const els = this.getAll(node, obj.selector)
             if (els.length === 0) return
-            els.forEach((el) => {
-                if (el.classList.contains(obj.notSelector)) return
-                el.classList.add(obj.notSelector)
-                this.runIfFunc(obj.callback, el)
-            })
+            this.callCallback(obj, els)
         })
     }
 
-    getNotSelector = (selector, notSelector) => {
-        const not = `:not(${notSelector})`
-        if (!selector.includes(',')) {
-            return `${selector}${not}`
-        }
-
-        const splitSelector = selector.split(',')
-        selector = ''
-
-        for (let i = 0; i < splitSelector.length; i++) {
-            if (i === splitSelector.length - 1) {
-                selector += `${splitSelector[i]}${not}`
-                continue
-            }
-
-            selector += `${splitSelector[i]}${not},`
-        }
-
-        return selector
+    callCallback(obj, els) {
+        els.forEach((el) => {
+            if (el.classList.contains(obj.notSelector)) return
+            el.classList.add(obj.notSelector)
+            this.runIfFunc(obj.callback, el)
+        })
     }
 
     getAll(node, selector) {
@@ -94,7 +83,7 @@ class DocumentMutationObserver {
         })
     }
 
-    checkNode = (node, selector) => (node.matches?.(selector) ? node : null)
+    checkNode = (node, selector) => (node.matches(selector) ? node : null)
 
     get(selector, parent = false) {
         return new Promise((resolve) => {
@@ -102,19 +91,22 @@ class DocumentMutationObserver {
                 this.getInParent(selector, parent, resolve)
                 return
             }
-            const ex = document.querySelector(selector)
-            if (ex) {
-                resolve(ex)
+
+            const element = document.querySelector(selector)
+            if (element) {
+                resolve(element)
                 return
             }
+
             this.desired.push({ selector, resolve })
         })
     }
 
     getInParent(selector, parent, resolve) {
-        const ex = parent.querySelector(selector)
-        if (ex) {
-            resolve(ex)
+        const element = parent.querySelector(selector)
+
+        if (element) {
+            resolve(element)
             return
         }
 
@@ -128,15 +120,18 @@ class DocumentMutationObserver {
                 })
             })
         })
+
         observer.observe(parent, this.opt)
     }
 
     setCallback(callback, selector, notSelector = this.defaultNotSelector) {
         const obj = {
             callback: callback,
-            selector: this.getNotSelector(selector, notSelector),
+            selector: getNotSelector(selector, notSelector),
             notSelector: notSelector.replace('.', ''),
         }
+
+        this.callCallback(obj, document.querySelectorAll(obj.selector))
 
         this.needToCall.push(obj)
         return this

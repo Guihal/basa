@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "ES2019",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "strict": false,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "jsx": "react",
+        "lib": ["ES2019", "DOM"]
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "app", "dist"]
+}

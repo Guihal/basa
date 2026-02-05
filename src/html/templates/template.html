@@ -1,1 +1,41 @@
-<div>Hello world!</div>
+<div class="progress__container">
+    <div class="progress loading with-loading">
+        <div class="progress_text">40/100</div>
+    </div>
+    <div class="progress_disclaimer">подарков уже нашли своих получателей</div>
+</div>
+
+<div class="t-container">
+    <div class="table with-loading loading">
+        <div class="table__row table__header">
+            <div class="table__col-small">
+                <div class="table_text table__header_text">Фамилия и имя</div>
+            </div>
+            <div class="table__col"><div class="table_text table__header_text">Подарок</div></div>
+        </div>
+        <div class="table__body"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const elements = document.querySelectorAll('.uc-diff-header')
+
+        elements.forEach((el) => {
+            const t396Elem = el.querySelector('.t396__elem')
+            if (!t396Elem) return
+
+            const callback = () => {
+                if (t396Elem.style.left === '') return
+
+                el.classList.add('visible')
+            }
+
+            callback()
+
+            const observer = new MutationObserver(callback)
+
+            observer.observe(t396Elem, { attributes: true })
+        })
+    })
+</script>

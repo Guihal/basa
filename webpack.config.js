@@ -5,7 +5,7 @@ const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin') // Добавлено
 
 module.exports = {
-    entry: './src/js/main.js',
+    entry: './src/js/main.ts',
 
     output: {
         filename: 'bundle.js',
@@ -15,6 +15,18 @@ module.exports = {
     mode: 'production',
     module: {
         rules: [
+            {
+                test: /\.(ts|tsx)$/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true,
+                        },
+                    },
+                ],
+                exclude: /node_modules/,
+            },
             {
                 test: /\.css$/,
                 use: [
@@ -104,6 +116,10 @@ module.exports = {
             },
         }),
     ],
+
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.json'],
+    },
 
     optimization: {
         minimizer: [
